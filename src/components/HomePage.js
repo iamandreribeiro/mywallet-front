@@ -8,7 +8,7 @@ export default function HomePage(props) {
   const [records, setRecords] = useState([]);
   const [name, setName] = useState("");
   const email = props.email;
-  
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/show-records", {
@@ -32,7 +32,7 @@ export default function HomePage(props) {
       else entryArr += parseFloat(value.value);
     });
     
-    return(entryArr-spentArr);
+    return(parseFloat(entryArr-spentArr).toFixed(2));
   }
 
   calcBalance();
