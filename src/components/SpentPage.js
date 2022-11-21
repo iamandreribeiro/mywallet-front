@@ -1,16 +1,17 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AuthContext } from "../context/auth";
 
-export default function SpentPage(props) {
+export default function SpentPage() {
   const navigate = useNavigate();
-
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
+  const {userEmail} = useContext(AuthContext);
 
   function createSpent() {
-    const record = { value, description, email: props.email, type: "output" };
+    const record = { value, description, email: userEmail, type: "output" };
 
     axios
       .post("http://localhost:5000/new-record", record)
