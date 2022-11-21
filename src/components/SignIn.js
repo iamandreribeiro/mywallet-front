@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export default function SignIn() {
+export default function SignIn(props) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -22,9 +22,9 @@ export default function SignIn() {
 
     axios
       .post("http://localhost:5000/sign-in", user)
-      .then((data) => {
-        navigate("/home");
-        console.log(data);
+      .then(() => {
+        navigate("/home")
+        props.setEmail(user.email)
       })
       .catch((err) => {
         alert("Usuário não encontrado! Verifique seus dados.");
