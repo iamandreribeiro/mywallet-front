@@ -10,6 +10,10 @@ export default function SpentPage() {
   const [description, setDescription] = useState("");
   const {userEmail} = useContext(AuthContext);
 
+  if(!userEmail) {
+    navigate("/");
+  }
+
   function createSpent() {
     const record = { value, description, email: userEmail, type: "output" };
 

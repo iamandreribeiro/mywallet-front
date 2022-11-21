@@ -10,6 +10,10 @@ export default function EntryPage() {
   const [description, setDescription] = useState("");
   const {userEmail} = useContext(AuthContext);
 
+  if(!userEmail) {
+    navigate("/");
+  }
+
   function createEntry() {
     const record = { value, description, email: userEmail, type: "input" };
 

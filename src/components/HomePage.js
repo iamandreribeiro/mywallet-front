@@ -10,6 +10,10 @@ export default function HomePage() {
   const [name, setName] = useState("");
   const {userEmail} = useContext(AuthContext);
 
+  if(!userEmail) {
+    navigate("/");
+  }
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/show-records", {
