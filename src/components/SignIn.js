@@ -1,21 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AuthContext } from "../context/auth";
 
-export default function SignIn(props) {
+export default function SignIn() {
+  const {setUserEmail} = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  function getEmail(value) {
-    setEmail(value);
-  }
-
-  function getPassword(value) {
-    setPassword(value);
-  }
 
   function createUser() {
     const user = { email, password };
@@ -23,8 +18,8 @@ export default function SignIn(props) {
     axios
       .post("http://localhost:5000/sign-in", user)
       .then(() => {
-        navigate("/home")
-        props.setEmail(user.email)
+        navigate("/home");
+        setUserEmail(user.email);
       })
       .catch((err) => {
         alert("Usuário não encontrado! Verifique seus dados.");
@@ -38,13 +33,13 @@ export default function SignIn(props) {
 
       <StyledInput
         placeholder="E-mail"
-        onChange={(email) => getEmail(email.target.value)}
+        onChange={(email) => setEmail(email.target.value)}
       ></StyledInput>
 
       <StyledInput
         placeholder="Senha"
         type="password"
-        onChange={(password) => getPassword(password.target.value)}
+        onChange={(password) => setPassword(password.target.value)}
       ></StyledInput>
 
       <StyledButton onClick={() => createUser()}>Entrar</StyledButton>
