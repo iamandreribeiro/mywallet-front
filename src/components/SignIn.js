@@ -1,8 +1,11 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SignIn() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +19,17 @@ export default function SignIn() {
 
   function createUser() {
     const user = { email, password };
-    console.log(user);
+
+    axios
+      .post("http://localhost:5000/sign-in", user)
+      .then((data) => {
+        navigate("/home");
+        console.log(data);
+      })
+      .catch((err) => {
+        alert("Usuário não encontrado! Verifique seus dados.");
+        console.log(err);
+      });
   }
 
   return (
