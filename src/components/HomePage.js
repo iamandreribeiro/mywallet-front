@@ -1,19 +1,20 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { AuthContext } from "../context/auth";
 
-export default function HomePage(props) {
+export default function HomePage() {
   const navigate = useNavigate();
   const [records, setRecords] = useState([]);
   const [name, setName] = useState("");
-  const email = props.email;
+  const {userEmail} = useContext(AuthContext);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/show-records", {
         headers: {
-          email,
+          email: userEmail
         },
       })
       .then((data) => {
@@ -21,7 +22,7 @@ export default function HomePage(props) {
         setName(data.data.user.name);
       })
       .catch((err) => console.log(err));
-  }, [email]);
+  }, [userEmail]);
 
   function calcBalance() {
     let spentArr = 0;
